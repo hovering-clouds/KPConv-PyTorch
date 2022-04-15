@@ -17,7 +17,7 @@ public:
 	int count;
 	PointXYZ point;
 	vector<float> features;
-	vector<unordered_map<int, int>> labels;
+	vector<unordered_map<int, int>> labels;		//label多标签分类所以要用这种表示？
 
 
 	// Methods
@@ -43,6 +43,7 @@ public:
 	{
 		count += 1;
 		point += p;
+		//将f_begin开头的元素按顺序依次加到features的各个元素上
 		transform (features.begin(), features.end(), f_begin, features.begin(), plus<float>());
 		int i = 0;
 		for(vector<int>::iterator it = l_begin; it != l_begin + labels.size(); ++it)
@@ -66,7 +67,7 @@ public:
 		int i = 0;
 		for(vector<int>::iterator it = l_begin; it != l_begin + labels.size(); ++it)
 		{
-		    labels[i][*it] += 1;
+		    labels[i][*it] += 1;//第i行的*it号+1分，最后会选择分数最大的作为整体label
 		    i++;
 		}
 		return;

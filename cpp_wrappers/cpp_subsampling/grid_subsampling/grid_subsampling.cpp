@@ -8,7 +8,7 @@ void grid_subsampling(vector<PointXYZ>& original_points,
                       vector<float>& subsampled_features,
                       vector<int>& original_classes,
                       vector<int>& subsampled_classes,
-                      float sampleDl,
+                      float sampleDl, //论文中的dl，网格大小
                       int verbose) {
 
 	// Initialize variables
@@ -24,7 +24,7 @@ void grid_subsampling(vector<PointXYZ>& original_points,
 	// Limits of the cloud
 	PointXYZ minCorner = min_point(original_points);
 	PointXYZ maxCorner = max_point(original_points);
-	PointXYZ originCorner = floor(minCorner * (1/sampleDl)) * sampleDl;
+	PointXYZ originCorner = floor(minCorner * (1/sampleDl)) * sampleDl;//取整也许是作为方格原点？
 
 	// Dimensions of the grid
 	size_t sampleNX = (size_t)floor((maxCorner.x - originCorner.x) / sampleDl) + 1;
@@ -41,7 +41,7 @@ void grid_subsampling(vector<PointXYZ>& original_points,
 
 	// Verbose parameters
 	int i = 0;
-	int nDisp = N / 100;
+	int nDisp = N / 100; //每多少个点display一次
 
 	// Initialize variables
 	size_t iX, iY, iZ, mapIdx;
@@ -112,8 +112,8 @@ void batch_grid_subsampling(vector<PointXYZ>& original_points,
                               vector<float>& subsampled_features,
                               vector<int>& original_classes,
                               vector<int>& subsampled_classes,
-                              vector<int>& original_batches,
-                              vector<int>& subsampled_batches,
+                              vector<int>& original_batches, //采样前各个batch的大小
+                              vector<int>& subsampled_batches, //采样后各个batch的大小
                               float sampleDl,
                               int max_p)
 {
@@ -121,7 +121,7 @@ void batch_grid_subsampling(vector<PointXYZ>& original_points,
 	// ******************
 
 	int b = 0;
-	int sum_b = 0;
+	int sum_b = 0;//sum of batches,当前已经扫过的batch里面的样本总数
 
 	// Number of points in the cloud
 	size_t N = original_points.size();

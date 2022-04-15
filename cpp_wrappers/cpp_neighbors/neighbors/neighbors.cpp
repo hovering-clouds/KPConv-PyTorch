@@ -2,6 +2,7 @@
 #include "neighbors.h"
 
 
+//思路：对每个query寻找supports中的radius邻域中的点，得到嵌套向量tmp，然后把它全放在一个总的neighbors_indices向量中
 void brute_neighbors(vector<PointXYZ>& queries, vector<PointXYZ>& supports, vector<int>& neighbors_indices, float radius, int verbose)
 {
 
@@ -55,6 +56,7 @@ void brute_neighbors(vector<PointXYZ>& queries, vector<PointXYZ>& supports, vect
 	return;
 }
 
+//与上面相同，但是找到的邻居会按照距离增序排列
 void ordered_neighbors(vector<PointXYZ>& queries,
                         vector<PointXYZ>& supports,
                         vector<int>& neighbors_indices,
@@ -124,8 +126,8 @@ void ordered_neighbors(vector<PointXYZ>& queries,
 
 void batch_ordered_neighbors(vector<PointXYZ>& queries,
                                 vector<PointXYZ>& supports,
-                                vector<int>& q_batches,
-                                vector<int>& s_batches,
+                                vector<int>& q_batches,//query batch
+                                vector<int>& s_batches,//support batch
                                 vector<int>& neighbors_indices,
                                 float radius)
 {
